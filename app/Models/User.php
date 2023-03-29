@@ -41,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    /**
+     * リレーションを設定
+     */
+
+    // ユーザの投稿
+    public function posts(){
+        return $this->hasMany('App\Models\Post');
+    }
 }
