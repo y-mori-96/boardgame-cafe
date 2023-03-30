@@ -34,8 +34,12 @@ class RegisteredUserController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
+            /**
+             * name、emailに関して、アカウント情報変更と合わせる
+             * app/Http/Requests/ProfileUpdateRequest.php
+             */
             $request->validate([
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['required', 'string', 'max:10'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
@@ -44,6 +48,8 @@ class RegisteredUserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'profile' => '',
+                'image' => '',
             ]);
     
             event(new Registered($user));

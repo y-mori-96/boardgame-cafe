@@ -25,17 +25,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        /** -- 制約 --
-         * ログインユーザー
-         * 新着順
-         * 10件表示
-         */
         $user = \Auth::user();
-        $posts = $user->posts()->latest('created_at')->paginate(10);
+        $follow_user_ids = $user->follow_users->pluck('id');
+        $user_posts = $user->posts()->orWhereIn('user_id', $follow_user_ids )->latest()->paginate(10);
+        $recommended_users = $user->whereNotIn('id', $follow_user_ids)->recommend($user->id)->limit(3)->get();
         
         return view('posts.index', [
             'header' => '投稿一覧',
-            'posts' => $posts,
+            'user' => $user,
+            'posts' => $user_posts,
+            'recommended_users' => $recommended_users,
         ]);
     }
 

@@ -15,8 +15,12 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        /**
+         * name、emailに関して、ユーザ新規作成の内容と一致させる 
+         * app/Http/Controllers/Auth/RegisteredUserController.php
+         */
         return [
-            'name' => ['string', 'max:255'],
+            'name' => ['string', 'max:10'],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }

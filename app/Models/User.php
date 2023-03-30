@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Follow;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'profile',
+        'image',
     ];
 
     /**
@@ -49,5 +53,35 @@ class User extends Authenticatable
     // ユーザの投稿
     public function posts(){
         return $this->hasMany('App\Models\Post');
+    }
+    
+    // フォロー
+    public function follows(){
+        return $this->hasMany('App\Models\Follow');
+    }
+ 
+    // フォローしているユーザを取得
+    public function follow_users(){
+      return $this->belongsToMany('App\Models\User', 'follows', 'user_id', 'follow_id');
+    }
+ 
+    // フォロワー
+    public function followers(){
+      return $this->belongsToMany('App\Models\User', 'follows', 'follow_id', 'user_id');
+    }
+    
+    // 該当のユーザーが特定のユーザーをフォローしているかどうか
+    public function isFollowing($user){
+      $result = $this->follow_users->pluck('id')->contains($user->id);
+      return $result;
+    }
+    
+    // おすすめのユーザーを選択するロジック
+    public function scopeRecommend($query, $self_id){
+        // 最新順
+        // return $query->where('id', '!=', $self_id)->latest()->limit(3);
+        
+        // ランダム
+        return $query->where('id', '!=', $self_id)->orderByRaw('RAND()')->limit(3);
     }
 }
