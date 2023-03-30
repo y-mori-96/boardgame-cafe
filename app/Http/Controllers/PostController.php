@@ -23,18 +23,21 @@ class PostController extends Controller
     /**
      * 投稿一覧
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = \Auth::user();
         $follow_user_ids = $user->follow_users->pluck('id');
-        $user_posts = $user->posts()->orWhereIn('user_id', $follow_user_ids )->latest()->paginate(10);
+        $search = $request->search;
+        $user_posts = $user->posts()->orWhereIn('user_id', $follow_user_ids )->search($search)->latest()->paginate(10);
         $recommended_users = $user->whereNotIn('id', $follow_user_ids)->recommend($user->id)->limit(3)->get();
+        
         
         return view('posts.index', [
             'header' => '投稿一覧',
             'user' => $user,
-            'posts' => $user_posts,
             'recommended_users' => $recommended_users,
+            'posts' => $user_posts,
+            'search' => $search,
         ]);
     }
 

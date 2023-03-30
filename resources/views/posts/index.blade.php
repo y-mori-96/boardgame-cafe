@@ -1,14 +1,35 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ $header }}
-            </h2>
-        </div>
+            <div class="flex justify-between items-center">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ $header }}
+                </h2>
+            
+                <!--検索-->
+                <div class="flex justify-center items-center">
+                    <div class="xl:w-96">
+                        <form method="get" action="{{ route('posts.index') }}">
+                            <div class="relative flex w-full flex-wrap items-stretch">
+                                <input
+                                    type="search"
+                                    name="search"
+                                    placeholder="キーワード検索"
+                                    value="{{ $search ?? '' }}"
+                                    class="relative m-0 -mr-px block w-[1%] min-w-0 flex-auto rounded-l border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out"
+                                />
+                                <button
+                                    class="relative z-[2] rounded-r border-2 border-blue-500 px-6 py-2 text-blue-500 text-xs font-medium uppercase transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0"
+                                >検索
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
     </x-slot>
-    
+
     <!-- おすすめユーザー表示 -->
-    <div class="container my-6 px-6 mx-auto">
+    <div class="container max-w-7xl my-6 px-6 mx-auto">
       <section class="text-center lg:text-left">
         <h2 class="text-3xl font-bold mb-2">
           おすすめユーザ
@@ -105,7 +126,7 @@
                             </x-primary-button>
                         </a>
                         
-                        <form method="post" class="delete" action="{{ route('posts.destroy', $post) }}">
+                        <form method="post" action="{{ route('posts.destroy', $post) }}">
                             @csrf
                             @method('delete')
                             <x-primary-button class="ml-2 bg-red-700 hover:bg-red-600 focus:bg-red-600 active:bg-red-800">
