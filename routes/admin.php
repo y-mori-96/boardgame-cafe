@@ -10,9 +10,12 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\FollowController;
+use App\Http\Controllers\Admin\UsersController;
+
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\PostController;
+// use App\Http\Controllers\FollowController;
+
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +38,12 @@ Route::get('/', function () {
 //     return redirect()->route('posts.index');
 // });
 
+/**
+ * ユーザ管理
+ */
+Route::resource('users', UsersController::class)
+    ->middleware('auth:admin');
+
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth:admin', 'verified'])->name('dashboard');
@@ -46,9 +55,9 @@ Route::get('/dashboard', function () {
 // Route::get('/users/edit_image', [UserController::class, 'editImage'])->name('users.edit_image');
 // Route::patch('/users/edit_image', [UserController::class, 'updateImage'])->name('users.update_image');
  
-Route::resource('users', UserController::class)->only([
-  'show',
-]);
+// Route::resource('users', UserController::class)->only([
+//   'show',
+// ]);
 
 // アカウント設定
 Route::middleware('auth:admin')->group(function () {
@@ -60,16 +69,16 @@ Route::middleware('auth:admin')->group(function () {
 /**
  * 投稿
  */
-Route::resource('posts', PostController::class);
+// Route::resource('posts', PostController::class);
 
-/**
- * フォロー
- */
-Route::resource('follows', FollowController::class)->only([
-    'index', 'store', 'destroy'
-]);
+// /**
+//  * フォロー
+//  */
+// Route::resource('follows', FollowController::class)->only([
+//     'index', 'store', 'destroy'
+// ]);
 
-Route::get('/follower', [FollowController::class, 'followerIndex']);
+// Route::get('/follower', [FollowController::class, 'followerIndex']);
 
 
 /**
