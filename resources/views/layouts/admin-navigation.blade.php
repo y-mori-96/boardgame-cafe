@@ -12,11 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                        ダッシュボード
-                    </x-nav-link>
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                         オーナー管理
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.boardgames.index')" :active="request()->routeIs('admin.boardgames.index')">
+                        ボードゲーム管理
                     </x-nav-link>
                 </div>
             </div>
@@ -78,10 +78,10 @@
     <!--モバイル-->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                ダッシュボード
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                オーナー管理
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.boardgames.index')" :active="request()->routeIs('admin.boardgames.index')">
                 オーナー管理
             </x-responsive-nav-link>
         </div>

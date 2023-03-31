@@ -11,13 +11,14 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\BoardgamesController;
 
 // use App\Http\Controllers\UserController;
 // use App\Http\Controllers\PostController;
 // use App\Http\Controllers\FollowController;
 
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,9 +68,10 @@ Route::middleware('auth:admin')->group(function () {
 });
 
 /**
- * 投稿
+ * ボードゲーム管理
  */
-// Route::resource('posts', PostController::class);
+Route::resource('boardgames', BoardgamesController::class)
+    ->middleware('auth:admin');
 
 // /**
 //  * フォロー
