@@ -3,6 +3,11 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\BoardgameController;
+use App\Http\Controllers\ExhibitionController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\RentalItemController;
+use App\Http\Controllers\RentalController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,11 +23,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 Route::get('/', function () {
-    return redirect()->route('posts.index');
+    return view('top');
 });
 
 // Route::get('/dashboard', function () {
@@ -64,3 +66,42 @@ Route::resource('follows', FollowController::class)->only([
 ]);
 
 Route::get('/follower', [FollowController::class, 'followerIndex']);
+
+/**
+ * ボードゲーム一覧
+ */
+Route::get('/boardgames', [BoardgameController::class, 'index'])->name('boardgames.index');
+
+
+/**
+ * EC
+ */
+Route::resource('exhibitions', ExhibitionController::class)->only([
+  'index', 'show',
+]);
+
+// 注文
+Route::patch('/exhibitions/{exhibition}/add_soldExhibition', [ExhibitionController::class, 'addSoldItem'])->name('exhibitions.add_soldItem');
+Route::get('/exhibitions/{exhibition}/finish', [ExhibitionController::class, 'finish'])->name('exhibitions.finish');
+
+// カート
+Route::resource('cart', CartController::class)->only([
+  'index', 'destroy',
+]);
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/cart/success', [CartController::class, 'success'])->name('cart.success');
+Route::get('/cart/cancel', [CartController::class, 'cancel'])->name('cart.cancel');
+
+/**
+ * レンタル
+ */
+Route::resource('rental-items', RentalItemController::class)->only([
+  'index', 'show',
+]);
+
+// 貸し出し状況
+Route::resource('rental', RentalController::class)->only([
+  'index', 'destroy',
+]);
+Route::post('/add', [RentalController::class, 'add'])->name('rental.add');

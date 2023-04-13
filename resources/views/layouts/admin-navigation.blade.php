@@ -18,6 +18,12 @@
                     <x-nav-link :href="route('admin.boardgames.index')" :active="request()->routeIs('admin.boardgames.index')">
                         ボードゲーム管理
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.exhibitions.index')" :active="request()->routeIs('admin.exhibitions.index')">
+                        出品商品管理
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.rental-items.index')" :active="request()->routeIs('admin.rental-items.index')">
+                        レンタル商品管理
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -82,7 +88,13 @@
                 オーナー管理
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.boardgames.index')" :active="request()->routeIs('admin.boardgames.index')">
-                オーナー管理
+                ボードゲーム管理
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.exhibitions.index')" :active="request()->routeIs('admin.exhibitions.index')">
+                商品管理
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.rental-items.index')" :active="request()->routeIs('admin.rental-items.index')">
+                商品管理
             </x-responsive-nav-link>
         </div>
 

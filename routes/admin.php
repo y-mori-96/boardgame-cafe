@@ -12,10 +12,11 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\BoardgamesController;
+use App\Http\Controllers\Admin\ExhibitionsController;
+use App\Http\Controllers\Admin\RentalItemController;
 
 // use App\Http\Controllers\UserController;
 // use App\Http\Controllers\PostController;
-// use App\Http\Controllers\FollowController;
 
 
 use App\Http\Controllers\Admin\ProfileController;
@@ -72,15 +73,22 @@ Route::middleware('auth:admin')->group(function () {
  */
 Route::resource('boardgames', BoardgamesController::class)
     ->middleware('auth:admin');
+// Route::get('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'edit']);
+// Route::patch('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'updateImage']);
+Route::get('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'editImage'])->name('boardgames.edit_image');
+Route::patch('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'updateImage'])->name('boardgames.update_image');
 
-// /**
-//  * フォロー
-//  */
-// Route::resource('follows', FollowController::class)->only([
-//     'index', 'store', 'destroy'
-// ]);
-
-// Route::get('/follower', [FollowController::class, 'followerIndex']);
+/**
+ * EC
+ */
+Route::resource('exhibitions', ExhibitionsController::class)
+    ->middleware('auth:admin');
+ 
+/**
+ * レンタル
+ */ 
+Route::resource('rental-items', RentalItemController::class)
+    ->middleware('auth:admin');
 
 
 /**

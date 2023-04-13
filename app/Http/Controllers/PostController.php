@@ -46,7 +46,7 @@ class PostController extends Controller
      */
     public function create()
     {
-         return view('posts.create', [
+        return view('posts.create', [
           'header' => '新規投稿',
         ]);
     }
@@ -89,8 +89,7 @@ class PostController extends Controller
     {
         $user = \Auth::user();
         $post = Post::find($id);
-        // dd($post->user_id);
-        
+
         if($post === null){
             return redirect()->route('posts.index');
         }else if($post->user_id !== $user->id){

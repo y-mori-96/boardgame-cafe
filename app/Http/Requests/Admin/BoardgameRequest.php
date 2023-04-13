@@ -23,8 +23,13 @@ class BoardgameRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:50'],
-            'barcode' => ['max:100'],
-            // 'image' => [],
+            'barcode' => ['max:20'],
+            // 'image' => [
+            //   'file', // ファイルがアップロードされている
+            //   'image', // 画像ファイルである
+            //   'mimes:jpeg,jpg,png', // 形式はjpegかpng
+            //   'dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000', // 50*50 ~ 1000*1000 まで
+            // ],
             'outline' => ['max:2000'],
         ];
     }

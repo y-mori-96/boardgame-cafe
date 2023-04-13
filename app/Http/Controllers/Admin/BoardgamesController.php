@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 // リクエストフォーム
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\BoardgameRequest;
+use App\Http\Requests\Admin\BoardgameImageRequest;
 
 // モデル
 use App\Models\Boardgame;
@@ -48,11 +49,20 @@ class BoardgamesController extends Controller
      */
     public function store(BoardgameRequest $request)
     {
+        //画像投稿処理
+        // $path = '';
+        // $image = $request->file('image');
+        // if( isset($image) === true ){
+        //     // publicディスク(storage/app/public/)のphotosディレクトリに保存
+        //     $path = $image->store('photos', 'public');
+        // }
+
         Boardgame::create([
-          'name' => $request->name,
-          'barcode' => '111111',
-        //   'image' => '', // 仮置き
-          'outline' => '概要',
+            'name' => $request->name,
+            'barcode' => $request->barcode,
+            // 'image' => $path, // ファイルパスを保存
+            'image' => '', // ファイルパスを保存
+            'outline' => $request->outline,
         //   'play_people_id' => '２～４人',
         //   'play_time_id' => '３０分～６０分',
         ]);
@@ -75,17 +85,49 @@ class BoardgamesController extends Controller
      */
     public function edit(string $id)
     {
-        return view('admin.boardgames.edit', [
-          'header' => 'ボードゲーム編集',
-        ]);
+        $boardgame = Boardgame::find($id);
+
+        if($boardgame === null){
+            return redirect()->route('admin.boardgames.index');
+        }else{
+            return view('admin.boardgames.edit', [
+              'header' => 'ボードゲーム編集',
+              'boardgame'  => $boardgame,
+            ]);
+        }
     }
 
     /**
      * 更新処理
      */
-    public function update(Request $request, string $id)
+    public function update(BoardgameRequest $request, string $id)
     {
-        //
+        //画像投稿処理
+        // $path = '';
+        // $image = $request->file('image');
+ 
+        // if( isset($image) === true ){
+        //     // publicディスク(storage/app/public/)のphotosディレクトリに保存
+        //     $path = $image->store('photos', 'public');
+        // }
+        
+        $boardgame = Boardgame::find($id);
+        
+        // 変更前の画像の削除
+        // if($boardgame->image !== ''){
+        //   \Storage::disk('public')->delete(\Storage::url($boardgame->image));
+        // }
+        
+        $boardgame->update($request->only([
+            'name', 
+            'barcode', 
+            // 'image' => $path, // ファイルパスを保存
+            // 'image' => '', // ファイルパスを保存
+            'outline',
+        ]));
+        
+        session()->flash('success', '情報を編集しました');
+        return redirect()->route('admin.boardgames.index');
     }
 
     /**
@@ -93,6 +135,57 @@ class BoardgamesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $boardgame = Boardgame::find($id);
+        
+        // 画像の削除
+        if($boardgame->image !== ''){
+          \Storage::disk('public')->delete($boardgame->image);
+        }
+        
+        $boardgame->delete();
+        \Session::flash('success', 'ボードゲームを削除しました');
+        return redirect()->route('admin.boardgames.index');
     }
+    
+    /**
+     * 画像変更処理
+     */
+    public function editImage($id)
+    {
+        $boardgame = Boardgame::find($id);
+        
+        return view('admin.boardgames.edit_image', [
+            'header' => '画像変更画面',
+            'boardgame' => $boardgame,
+        ]);
+    }
+    
+    /**
+     * 画像変更処理
+     */
+    public function updateImage($id, BoardgameImageRequest $request){
+ 
+        //画像投稿処理
+        $path = '';
+        $image = $request->file('image');
+ 
+        if( isset($image) === true ){
+            // publicディスク(storage/app/public/)のphotosディレクトリに保存
+            $path = $image->store('photos', 'public');
+        }
+ 
+        $boardgame = Boardgame::find($id);
+ 
+        // 変更前の画像の削除
+        if($boardgame->image !== ''){
+          \Storage::disk('public')->delete(\Storage::url($boardgame->image));
+        }
+ 
+        $boardgame->update([
+          'image' => $path, // ファイル名を保存
+        ]);
+ 
+        session()->flash('success', '画像を変更しました');
+        return redirect()->route('admin.boardgames.index');
+      }
 }

@@ -9,6 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\Follow;
+use App\Models\Exhibition;
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\RentalItem;
+use App\Models\Rental;
 
 class User extends Authenticatable
 {
@@ -83,5 +88,42 @@ class User extends Authenticatable
         
         // ランダム
         return $query->where('id', '!=', $self_id)->orderByRaw('RAND()')->limit(3);
+    }
+    
+    /**
+     * EC
+     */
+    // 商品
+    public function Exhibitions(){
+      return $this->belongsToMany(Exhibition::class, 'carts')->withPivot(['id', 'quantity']);
+    }
+    
+    // 注文者
+    public function orders(){
+        return $this->hasMany('App\Models\Order');
+    }
+
+    // 注文商品
+    public function orderItems(){
+        return $this->belongsToMany('App\Models\Exhibition', 'orders');
+    }
+    
+    // カート
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+    
+    /**
+     * レンタル
+     */
+     
+    public function rentalItems(){
+      return $this->belongsToMany(RentalItem::class, 'rentals')->withPivot(['id', 'state', 'start_date', 'rental_date']);
+    }
+    
+    // 注文状態
+    public function rentals(){
+        return $this->hasMany(Rental::class);
     }
 }

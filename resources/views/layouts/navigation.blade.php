@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('posts.index') }}">
+                    <a href="/">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -14,6 +14,15 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         投稿一覧
+                    </x-nav-link>
+                    <x-nav-link :href="route('boardgames.index')" :active="request()->routeIs('boardgames.index')">
+                        ボードゲーム一覧
+                    </x-nav-link>
+                    <x-nav-link :href="route('exhibitions.index')" :active="request()->routeIs('exhibitions.index')">
+                        出品商品一覧
+                    </x-nav-link>
+                    <x-nav-link :href="route('rental-items.index')" :active="request()->routeIs('rental-items.index')">
+                        レンタル一覧
                     </x-nav-link>
                 </div>
             </div>
@@ -82,6 +91,15 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
                 新規投稿
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('boardgames.index')" :active="request()->routeIs('boardgames.index')">
+                ボードゲーム一覧
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('exhibitions.index')" :active="request()->routeIs('exhibitions.index')">
+                商品一覧
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('rental-items.index')" :active="request()->routeIs('rental-items.index')">
+                レンタル一覧
             </x-responsive-nav-link>
         </div>
 
