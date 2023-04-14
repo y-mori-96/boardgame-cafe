@@ -42,7 +42,7 @@ class RentalItemController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 詳細
      */
     public function show(string $id)
     {

@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 mx-auto">
-                            <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                            <div class="w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
                                         <tr>
@@ -62,12 +62,14 @@
                                                         <font style="vertical-align: inherit;">{{ $rental->state }}</font>
                                                     </font>
                                                 </td>
-                                                <td class="w-16 text-center">
-                                                    {{--詳細を表示できるようにする--}}
-                                                    <x-secondary-button class="bg-blue-500">
-                                                        詳細
-                                                    </x-secondary-button>
-                                                    <!--<input name="plan" type="radio">-->
+                                                <td class="text-center">
+                                                    <form method="post" action="{{ route('rental.destroy', $rental) }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <x-primary-button class="ml-2 bg-red-700 hover:bg-red-600 focus:bg-red-600 active:bg-red-800">
+                                                            キャンセル
+                                                        </x-primary-button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

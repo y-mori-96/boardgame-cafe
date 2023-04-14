@@ -85,4 +85,30 @@ class RentalController extends Controller
             
         return redirect()->route('rental.index');
     }
+    
+    
+    /**
+     * 削除
+     */
+    public function destroy(string $id)
+    {
+        $rental = Rental::findOrFail($id);
+        
+        // ストック数を増やす
+        // dd($rental->rental_item_id->stock_quantity);
+        $rental_item = $rental->rentalItem;
+        $rental_item->stock_quantity += 1;
+        if($rental_item->stock_quantity > 0 ){
+            $rental_item->state = 1;
+            // dd($rental_item->state);
+        }
+        
+        
+        // dd($rental, $rental_item, $rental_item->state);
+        $rental_item->save();
+        $rental->delete();
+
+        \Session::flash('success', '予約を取り消しました');
+        return redirect()->route('rental.index');
+    }
 }
