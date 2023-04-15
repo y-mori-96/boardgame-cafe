@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // モデル
 use App\Models\User;
+use App\Models\Rental;
 
 use Carbon\Carbon;
 
@@ -31,6 +32,26 @@ class UsersController extends Controller
         return view('admin.users.index', [
             'header' => 'ユーザ一覧',
             'users' => $users,
+        ]);
+    }
+    
+    /**
+     * ユーザレンタル状態
+     */
+    public function rentals()
+    {
+        $user = User::findOrFail(\Auth::id());
+        $rentals = $user->rentals;
+        // dd($rentals);
+        
+
+        // $users = User::all();
+        // dd($users->created_at-);
+        
+        return view('admin.users.rentals', [
+            'header' => 'レンタル状態',
+            'user' => $user,
+            'rentals' => $rentals,
         ]);
     }
 

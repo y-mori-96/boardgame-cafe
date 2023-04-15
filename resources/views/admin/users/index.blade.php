@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 mx-auto">
-                            <div class="lg:w-2/3 w-full mx-auto overflow-auto">
+                            <div class="w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-left whitespace-no-wrap">
                                     <thead>
                                         <tr>
@@ -52,11 +52,16 @@
                                                         <font style="vertical-align: inherit;">{{ $user->created_at->diffForHumans() }}</font>
                                                     </font>
                                                 </td>
-                                                <td class="w-16 text-center">
+                                                <td class="text-center">
                                                     {{--詳細を表示できるようにする--}}
-                                                    <x-secondary-button class="bg-blue-500">
-                                                        詳細
-                                                    </x-secondary-button>
+                                                    <a href="{{ route('admin.users.rentals') }}">
+                                                        <x-primary-button class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+                                                            レンタル状態
+                                                        </x-primary-button>
+                                                    </a>
+                                                    <!--<x-secondary-button class="bg-blue-500">-->
+                                                    <!--    詳細-->
+                                                    <!--</x-secondary-button>-->
                                                     <!--<input name="plan" type="radio">-->
                                                 </td>
                                             </tr>

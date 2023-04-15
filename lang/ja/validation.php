@@ -128,6 +128,8 @@ return [
     'url' => ':attributeに正しい形式を指定してください。',
     'ulid' => ':attributeに有効なULIDを指定してください。',
     'uuid' => ':attributeに有効なUUIDを指定してください。',
+    'after_or_equal' => ':attributeには、本日以降の日付を指定してください。',
+    'after' => ':attributeには、:date以降の日付を指定してください。',
 
     /*
     |--------------------------------------------------------------------------
@@ -233,6 +235,9 @@ return [
         'updated_at' => '更新日',
         'username' => 'ユーザー名',
         'year' => '年',
+        'start_date' => 'レンタル予定日',
+        'rental_date' => 'レンタル終了日',
+        'today' => '本日',
     ],
-
+    
 ];

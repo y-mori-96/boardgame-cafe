@@ -22,9 +22,9 @@
                         </button>
                     </div>
                 </form>
-       　　     </div>
-          </div>
+       　　  </div>
         </div>
+      </div>
     </x-slot>
 
     <div class="py-12">

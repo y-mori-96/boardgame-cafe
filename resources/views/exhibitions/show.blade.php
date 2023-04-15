@@ -5,11 +5,18 @@
                 {{ $header }}
             </h2>
             
-            <a href="{{ route('cart.index') }}">
-                <x-primary-button class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
-                    カートを表示
-                </x-primary-button>
-            </a>
+            <div class="relative">
+                <a href="{{ route('cart.index') }}">
+                    @if(auth()->user()->carts()->count() !== 0)
+                        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2">
+                            {{ auth()->user()->carts()->count() }}
+                        </span>
+                    @endif
+                    <x-primary-button class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+                        カートを表示
+                    </x-primary-button>
+                </a>
+            </div>
         </div>
     </x-slot>
 

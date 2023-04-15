@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\BoardgamesController;
 use App\Http\Controllers\Admin\ExhibitionsController;
 use App\Http\Controllers\Admin\RentalItemController;
+use App\Http\Controllers\Admin\RentalController;
 
 // use App\Http\Controllers\UserController;
 // use App\Http\Controllers\PostController;
@@ -45,6 +46,8 @@ use Illuminate\Support\Facades\Route;
  */
 Route::resource('users', UsersController::class)
     ->middleware('auth:admin')->only(['index']);
+Route::get('/users/rentals', [UsersController::class, 'rentals'])->name('users.rentals')
+    ->middleware('auth:admin');
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
@@ -90,6 +93,15 @@ Route::resource('exhibitions', ExhibitionsController::class)
 Route::resource('rental-items', RentalItemController::class)
     ->middleware('auth:admin');
 
+// 貸し出し状況
+Route::resource('rentals', RentalController::class)
+    ->only(['index', 'destroy',])
+    ->middleware('auth:admin');
+    
+Route::post('/rentals/permission/{rental}', [RentalController::class, 'permission'])->name('rentals.permission')
+    ->middleware('auth:admin');
+Route::post('/rentals/completion/{rental}', [RentalController::class, 'completion'])->name('rentals.completion')
+    ->middleware('auth:admin');
 
 /**
  * 認証

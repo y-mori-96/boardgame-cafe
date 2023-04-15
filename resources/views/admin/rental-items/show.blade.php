@@ -36,9 +36,24 @@
                             <p class="leading-relaxed">{{ $rental_item->boardgame->outline }}</p>
                         </div>
                         <div>
-                            <p class="title-font font-medium text-2xl text-gray-900">在庫数：{{ $rental_item->stock_quantity }}</p>
                             <div class="flex justify-between">
-                                <p class="title-font font-medium text-2xl text-gray-900">状態　：{{ $rental_item->state }}</p>
+                                <p class="title-font font-medium text-2xl text-gray-900">
+                                    @if($rental_item->stock_quantity <= 0 )
+                                        <p class="title-font font-medium text-2xl text-gray-900 mr-10">
+                                            在庫数：0 {{--マイナスはすべて0表示--}}
+                                        </p>
+                                        <p class="title-font font-medium text-2xl">
+                                            状態：<span class="text-red-700">貸出中</span>
+                                        </p>
+                                    @else
+                                        <p class="title-font font-medium text-2xl text-gray-900 mr-10">
+                                            在庫数：{{ $rental_item->stock_quantity }}
+                                        </p>
+                                        <p class="title-font font-medium text-2xl text-gray-900">
+                                            状態：貸出可
+                                        </p>
+                                    @endif
+                                </p>
                                 <button onclick="location.href='{{ route('admin.rental-items.index') }}'" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                                     レンタル商品一覧へ戻る
                                 </button>

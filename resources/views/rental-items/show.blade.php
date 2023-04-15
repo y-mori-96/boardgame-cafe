@@ -71,14 +71,16 @@
                                     <div class="flex flex-col">
                                         @csrf
                                         <div class="relative mb-3 xl:w-96">
+                                            <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
                                             <label for="start_date" class="title-font font-medium text-2xl text-gray-900">レンタル予定日：</label>
                                             <input id="start_date" type="date" name="start_date" class="form-control" value="{{ date('Y-m-d') }}">
                                         </div>
                                         <div class="relative mb-3 xl:w-96">
+                                            <x-input-error :messages="$errors->get('rental_date')" class="mt-2" />
                                             <label for="rental_date" class="title-font font-medium text-2xl text-gray-900">レンタル終了日：</label>
                                             <input id="rental_date" type="date" name="rental_date" class="form-control" value="{{ \Carbon\Carbon::today()->addWeek()->format('Y-m-d') }}">
                                         </div>
-                                        <button class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                                        <button class="flex ml-auto text-white bg-green-700 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded">
                                             レンタル予約する
                                         </button>
                                         <input type="hidden" name="rental_item_id" value="{{ $rental_item->id }}">

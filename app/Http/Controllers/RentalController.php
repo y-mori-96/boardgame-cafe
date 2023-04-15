@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\RentalRequest;
 
 // モデル
 use App\Models\User;
 use App\Models\RentalItem;
 use App\Models\Rental;
+use Carbon\Carbon;
 
 class RentalController extends Controller
 {
@@ -32,19 +34,33 @@ class RentalController extends Controller
     /**
      *  レンタル状態一覧
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = User::findOrFail(\Auth::id());
-        // $rentals = $user->rentalItems;
-        $rentals = $user->rentals;
-        // dd($rentals->id);
         
-        // foreach($rentals as $rental){
-        //     // $rental->id;
-        //     dd($rental->boardgame);
-        // }
-        // $rentals = Rental::all();
+        // チェックボックスの状態を取得
+        $reserve = $request->input('reserve');
+        $rental = $request->input('rental');
+        $arrears = $request->input('arrears');
+        $completion = $request->input('completion');
         
+        // 検索条件を作成
+        $conditions = [];
+        if ($reserve) {
+            $conditions[] = ['state', '=', '予約中'];
+        }
+        if ($rental) {
+            $conditions[] = ['state', '=', '貸出中'];
+        }
+        if ($arrears) {
+            $conditions[] = ['state', '=', '延滞'];
+        }
+        if ($completion) {
+            $conditions[] = ['state', '=', '完了'];
+        }
+        // 検索を実行
+        $rentals = $user->rentals()->where($conditions)->get();
+
         return view('rental.index', [
             'header' => 'レンタル状態',
             'rentals' => $rentals,
@@ -54,7 +70,7 @@ class RentalController extends Controller
     /**
      * レンタル状態へ追加
      */
-    public function add(Request $request)
+    public function add(RentalRequest $request)
     {
         // カートに同じ商品があるか確認
         // $rentai_item_in_cart = Rental::where('rental_item_id', $request->rental_item_id)->where('user_id', \Auth::id())->first();
@@ -64,7 +80,12 @@ class RentalController extends Controller
         //     session()->flash('success', 'すでにその商品はレンタル状態');
         // }
         
-        
+        /**
+         * 要追加
+         * 開始日付が今日より前なら受け付けない
+         * 終了日付が開始日付より前なら受け付けない
+         */
+
         // ストック数を減らす
         $rental_item = RentalItem::findOrFail($request->rental_item_id);
         $rental_item->stock_quantity -= 1;
