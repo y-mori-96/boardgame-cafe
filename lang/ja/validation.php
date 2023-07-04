@@ -238,6 +238,7 @@ return [
         'start_date' => 'レンタル予定日',
         'rental_date' => 'レンタル終了日',
         'today' => '本日',
+        'score' => '評価',
     ],
     
 ];

@@ -1,1 +1,1 @@
-<img src="{{asset('img\logo.jpg')}}" width="30%">
+<img src="{{asset('img\logo.png')}}"  class="block h-16 w-auto fill-current" >

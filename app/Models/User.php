@@ -126,4 +126,9 @@ class User extends Authenticatable
     public function rentals(){
         return $this->hasMany(Rental::class);
     }
+    
+    // レビュー
+    public function reviews(){
+        return $this->hasMany('App\Models\Review');
+    }
 }

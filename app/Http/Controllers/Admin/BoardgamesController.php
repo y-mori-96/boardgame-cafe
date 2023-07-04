@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\BoardgameRequest;
 use App\Http\Requests\Admin\BoardgameImageRequest;
+use App\Http\Requests\ReviewRequest;
 
 // モデル
 use App\Models\Boardgame;
+use App\Models\Review;
 
 class BoardgamesController extends Controller
 {
@@ -63,6 +65,7 @@ class BoardgamesController extends Controller
             // 'image' => $path, // ファイルパスを保存
             'image' => '', // ファイルパスを保存
             'outline' => $request->outline,
+            'description' => $request->description,
         //   'play_people_id' => '２～４人',
         //   'play_time_id' => '３０分～６０分',
         ]);
@@ -75,8 +78,23 @@ class BoardgamesController extends Controller
      */
     public function show(string $id)
     {
+        $boardgame = Boardgame::findOrFail($id);
+        $reviews = $boardgame->reviews()->latest()->paginate(10);
+        $review_count = $boardgame->reviews()->count();
+        $review_scores = $boardgame->reviews;
+        
+        $reviews_score = 0;
+        foreach($review_scores as $review_score) {
+            $reviews_score += $review_score->score;
+        }
+        // 条件式 ? 真の場合の値 : 偽の場合の値
+        $average_score = $review_scores->count() > 0 ? $reviews_score / $review_scores->count() : 0;
+
         return view('admin.boardgames.show', [
-          'header' => 'ボードゲーム詳細',
+            'boardgame' => $boardgame,
+            'reviews' => $reviews,
+            'review_count' => $review_count,
+            'average_score' => $average_score,
         ]);
     }
 
@@ -124,6 +142,7 @@ class BoardgamesController extends Controller
             // 'image' => $path, // ファイルパスを保存
             // 'image' => '', // ファイルパスを保存
             'outline',
+            'description',
         ]));
         
         session()->flash('success', '情報を編集しました');

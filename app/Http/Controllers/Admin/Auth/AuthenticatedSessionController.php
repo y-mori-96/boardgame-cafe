@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * ログイン後の処理
      */
     public function destroy(Request $request): RedirectResponse
     {
@@ -49,6 +49,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/admin');
+        return redirect('/');
     }
 }

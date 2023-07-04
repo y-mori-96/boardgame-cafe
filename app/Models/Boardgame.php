@@ -9,7 +9,7 @@ class Boardgame extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['name', 'barcode', 'image', 'outline'];
+    protected $fillable = ['name', 'barcode', 'image', 'outline', 'description', 'video'];
     
     public function exhibitions(){
       return $this->hasMany('App\Models\Exhibition');
@@ -17,6 +17,10 @@ class Boardgame extends Model
     
     public function rentalItems(){
       return $this->hasMany('App\Models\RentalItem');
+    }
+    
+    public function reviews(){
+      return $this->hasMany('App\Models\Review');
     }
     
     /**

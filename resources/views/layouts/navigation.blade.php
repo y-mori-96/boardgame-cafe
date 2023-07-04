@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo />
                     </a>
                 </div>
 
@@ -30,7 +30,7 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <a href="{{ route('posts.create') }}">
-                    <x-primary-button class="mr-2 bg-green-300 hover:bg-green-200 focus:bg-green-200 active:bg-green-400">
+                    <x-primary-button class="mr-2 bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
                         新規投稿
                     </x-primary-button>
                 </a>
@@ -86,11 +86,11 @@
     <!--モバイル-->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-                投稿一覧
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
                 新規投稿
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                投稿一覧
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('boardgames.index')" :active="request()->routeIs('boardgames.index')">
                 ボードゲーム一覧

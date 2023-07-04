@@ -62,12 +62,19 @@
                                       {{ $boardgame->outline }}
                                   </p>
                                   <div class="flex justify-center">
-                                      {{--
                                       <a href="{{ route('boardgames.show', $boardgame) }}" >
                                           <x-primary-button class="bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
                                               詳細
                                           </x-primary-button>
                                       </a>
+                                      @auth
+                                          <a href="{{ route('review.create', $boardgame) }}" >
+                                              <x-primary-button class="ml-4 bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-800">
+                                                  レビューを書く
+                                              </x-primary-button>
+                                          </a>
+                                      @endauth
+                                      {{--
                                       --}}
                                   </div>
                                   {{--
@@ -79,9 +86,11 @@
                               </div>
                             </div>
                         @empty
-                        <p class="text-lg font-semibold">
-                            ボードゲームがありません
-                        </p>
+                        <div class="mt-4 p-8 bg-white w-full rounded-2lx shadow-lg">
+                            <p class="p-4 text-lg font-semibold">
+                                ボードゲームがありません
+                            </p>
+                        </div>
                         @endforelse
                     </div>
                   </section>

@@ -30,7 +30,8 @@ class BoardgameRequest extends FormRequest
             //   'mimes:jpeg,jpg,png', // 形式はjpegかpng
             //   'dimensions:min_width=50,min_height=50,max_width=1000,max_height=1000', // 50*50 ~ 1000*1000 まで
             // ],
-            'outline' => ['max:2000'],
+            'outline' => ['max:500'],
+            'description' => ['max:2000'],
         ];
     }
 }

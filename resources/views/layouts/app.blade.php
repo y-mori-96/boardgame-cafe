@@ -39,14 +39,14 @@
             <!-- success message -->
             @if (session('success'))
                 <div class="max-w-7xl mx-auto px-6">
-                    <div class="mt-4 p-8 w-full rounded-2lx bg-green-300 rounded text-white font-bold font-semibold">
+                    <div class="mt-4 p-8 w-full rounded-2lx bg-green-700 rounded text-white font-bold font-semibold">
                         {{ session('success') }}
                     </div>
                 </div>
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="min-h-screen">
                 {{ $slot }}
             </main>
             

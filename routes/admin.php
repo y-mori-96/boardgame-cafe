@@ -69,17 +69,22 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    /**
+     * ボードゲーム管理
+     */
+    Route::resource('boardgames', BoardgamesController::class);
+    Route::get('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'editImage'])->name('boardgames.edit_image');
+    Route::patch('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'updateImage'])->name('boardgames.update_image');
+    // Route::get('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'edit']);
+    // Route::patch('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'updateImage']);
+    Route::get('/boardgames/{boardgame}/review/create', [BoardgameController::class, 'reviewCreate'])->name('review.create');
+    Route::post('/boardgames/{boardgame}/review/store', [BoardgameController::class, 'reviewStore'])->name('review.store');
+    Route::get('/review/{review}/edit', [BoardgameController::class, 'reviewEdit'])->name('review.edit');
+    Route::patch('/review/{review}', [BoardgameController::class, 'reviewUpdate'])->name('review.update');
+    Route::delete('/review/{review}', [BoardgameController::class, 'reviewDestroy'])->name('review.destroy');
 });
 
-/**
- * ボードゲーム管理
- */
-Route::resource('boardgames', BoardgamesController::class)
-    ->middleware('auth:admin');
-// Route::get('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'edit']);
-// Route::patch('/boardgames/{boardgame}/edit', [BoardgamesController::class, 'updateImage']);
-Route::get('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'editImage'])->name('boardgames.edit_image');
-Route::patch('/boardgames/{boardgame}/edit_image', [BoardgamesController::class, 'updateImage'])->name('boardgames.update_image');
 
 /**
  * EC

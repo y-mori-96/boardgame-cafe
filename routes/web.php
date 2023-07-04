@@ -8,6 +8,7 @@ use App\Http\Controllers\ExhibitionController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\RentalItemController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReviewController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -70,8 +71,20 @@ Route::get('/follower', [FollowController::class, 'followerIndex']);
 /**
  * ボードゲーム一覧
  */
-Route::get('/boardgames', [BoardgameController::class, 'index'])->name('boardgames.index');
+// Route::get('/boardgames', [BoardgameController::class, 'index'])->name('boardgames.index');
+Route::resource('boardgames', BoardgameController::class)->only([
+  'index', 'show',
+]);
+Route::get('/boardgames/{boardgame}/review/create', [BoardgameController::class, 'reviewCreate'])->name('review.create');
+Route::post('/boardgames/{boardgame}/review/store', [BoardgameController::class, 'reviewStore'])->name('review.store');
+Route::get('/review/{review}/edit', [BoardgameController::class, 'reviewEdit'])->name('review.edit');
+Route::patch('/review/{review}', [BoardgameController::class, 'reviewUpdate'])->name('review.update');
+Route::delete('/review/{review}', [BoardgameController::class, 'reviewDestroy'])->name('review.destroy');
 
+// レビュー
+// Route::resource('reviews', ReviewController::class)->only([
+//   'create', 'store', 'destroy'
+// ]);
 
 /**
  * EC

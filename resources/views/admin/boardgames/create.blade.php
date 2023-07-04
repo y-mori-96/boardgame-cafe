@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-24 max-w-7xl mx-auto px-6">
         {{--form method="POST" action="{{ route('admin.boardgames.store') }}" enctype="multipart/form-data">--}}
         <form method="POST" action="{{ route('admin.boardgames.store') }}">
             @csrf
@@ -26,6 +26,12 @@
                     <label for="outline" class="font-semibold mt-4">概要</label>
                     <x-input-error :messages="$errors->get('outline')" class="mt-2" />
                     <textarea id="outline" name="outline" cols="30" rows="5" class="w-auto py-2 border border-gray-300 rouned-md">{!! nl2br(e(old('outline'))) !!}</textarea>
+                </div>
+                
+                <div class="w-full flex flex-col">
+                    <label for="description" class="font-semibold mt-4">説明</label>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    <textarea id="description" name="description" cols="30" rows="5" class="w-auto py-2 border border-gray-300 rouned-md">{!! nl2br(e(old('description'))) !!}</textarea>
                 </div>
                 {{--
                 <div class="w-full flex flex-col">

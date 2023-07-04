@@ -35,12 +35,6 @@
                                           @else
                                               <img src="{{ asset('img/no_image.png') }}" class="h-52">
                                           @endif
-                                          {{--<img src="https://mdbcdn.b-cdn.net/img/new/standard/city/002.webp" class="w-full" />--}}
-                                        {{--
-                                        <a href="#!">
-                                          <div class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-                                        </a>
-                                        --}}
                                       </div>
                                     </div>
                                     <div class="p-6">
@@ -55,11 +49,6 @@
                                               </x-primary-button>
                                           </a>
                                       </div>
-                                      {{--
-                                      <a href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
-                                          詳細
-                                      </a>
-                                      --}}
                                         {{-- 管理者用 --}}
                                         <div class="mt-4">
                                             <p>以下管理者のみ表示</p>
@@ -93,9 +82,11 @@
                                   </div>
                                 </div>
                             @empty
-                            <p class="text-lg font-semibold">
-                                ボードゲームがありません
-                            </p>
+                            <div class="mt-4 p-8 bg-white w-full rounded-2lx shadow-lg">
+                                <p class="p-4 text-lg font-semibold">
+                                    ボードゲームがありません
+                                </p>
+                            </div>
                             @endforelse
                         </div>
                       </section>
